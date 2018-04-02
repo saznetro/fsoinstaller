@@ -37,7 +37,7 @@ import com.fsoinstaller.utils.MiscUtils;
 import com.fsoinstaller.utils.OperatingSystem;
 import com.fsoinstaller.utils.ReaderLister;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -100,7 +100,7 @@ class InnoExtractTask implements Callable<Boolean>
 				String os_name_lcase = System.getProperty("os.name").toLowerCase();
 				if (os_name_lcase.contains("windows 95") || os_name_lcase.contains("windows 98") || os_name_lcase.contains("windows me"))
 				{
-					item.logInstallError(XSTR.getString("innoExtractRequiresXP"));
+					item.logInstallError(getString("innoExtractRequiresXP"));
 					return false;
 				}
 				// other versions of Windows are okay
@@ -120,7 +120,7 @@ class InnoExtractTask implements Callable<Boolean>
 			
 			// no other OS is supported
 			default:
-				item.logInstallError(XSTR.getString("innoExtractNotSupported"));
+				item.logInstallError(getString("innoExtractNotSupported"));
 				return false;
 		}
 		
@@ -133,7 +133,7 @@ class InnoExtractTask implements Callable<Boolean>
 		
 		// the first thing we do is obtain a list of the files that need to be extracted
 		item.setIndeterminate(true);
-		item.setText(XSTR.getString("innoExtractCountingFiles"));
+		item.setText(getString("innoExtractCountingFiles"));
 		List<String> filesToBeExtracted;
 		try
 		{
@@ -157,13 +157,13 @@ class InnoExtractTask implements Callable<Boolean>
 		catch (IOException ioe)
 		{
 			logger.error("Could not obtain file listing using innoextract!", ioe);
-			item.logInstallError(XSTR.getString("innoExtractCountingFilesFailed"));
+			item.logInstallError(getString("innoExtractCountingFilesFailed"));
 			return false;
 		}
 		
 		// now that we have the files, run the installation and report progress
 		item.setIndeterminate(false);
-		item.setText(XSTR.getString("innoExtractExtractingFiles"));
+		item.setText(getString("innoExtractExtractingFiles"));
 		try
 		{
 			innoExtractExtractFiles(innoExtractExecutable, extractDir, filesToBeExtracted.size());
@@ -177,16 +177,16 @@ class InnoExtractTask implements Callable<Boolean>
 		catch (IOException ioe)
 		{
 			logger.error("Could not extract files using innoextract!", ioe);
-			item.logInstallError(XSTR.getString("innoExtractExtractingFilesFailed"));
+			item.logInstallError(getString("innoExtractExtractingFilesFailed"));
 			return false;
 		}
 		
 		// now move all the files to their proper place
-		item.setText(XSTR.getString("innoExtractMovingFiles"));
+		item.setText(getString("innoExtractMovingFiles"));
 		if (!moveAppFiles(new File(extractDir, "app"), installDir))
 		{
 			logger.error("Could not move app files to the correct location!");
-			item.logInstallError(XSTR.getString("innoExtractMovingFilesFailed"));
+			item.logInstallError(getString("innoExtractMovingFilesFailed"));
 			return false;
 		}
 		
@@ -209,13 +209,13 @@ class InnoExtractTask implements Callable<Boolean>
 			
 			// delete the folder that we no longer need
 			item.setIndeterminate(true);
-			item.setText(XSTR.getString("innoExtractDeletingTempFiles"));
+			item.setText(getString("innoExtractDeletingTempFiles"));
 			boolean result = IOUtils.deleteDirectoryTree(extractDir);
 			item.setIndeterminate(false);
 			if (!result)
 			{
 				logger.error("Could not delete the temporary directory tree!");
-				item.logInstallError(String.format(XSTR.getString("innoExtractDeletingTempFilesFailed"), extractDir.getAbsolutePath()));
+				item.logInstallError(String.format(getString("innoExtractDeletingTempFilesFailed"), extractDir.getAbsolutePath()));
 			}
 		}
 		return value;

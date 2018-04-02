@@ -40,7 +40,7 @@ import com.fsoinstaller.main.Configuration;
 import com.fsoinstaller.utils.GraphicsUtils;
 import com.fsoinstaller.utils.Logger;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public abstract class WizardPage extends JPanel
@@ -191,8 +191,8 @@ public abstract class WizardPage extends JPanel
 	{
 		public BackAction()
 		{
-			putValue(Action.NAME, XSTR.getString("backButtonName"));
-			putValue(Action.SHORT_DESCRIPTION, XSTR.getString("backButtonTooltip"));
+			putValue(Action.NAME, getString("backButtonName"));
+			putValue(Action.SHORT_DESCRIPTION, getString("backButtonTooltip"));
 		}
 		
 		public void actionPerformed(ActionEvent e)
@@ -211,8 +211,8 @@ public abstract class WizardPage extends JPanel
 	{
 		public NextAction()
 		{
-			putValue(Action.NAME, XSTR.getString("nextButtonName"));
-			putValue(Action.SHORT_DESCRIPTION, XSTR.getString("nextButtonTooltip"));
+			putValue(Action.NAME, getString("nextButtonName"));
+			putValue(Action.SHORT_DESCRIPTION, getString("nextButtonTooltip"));
 		}
 		
 		public void actionPerformed(ActionEvent e)
@@ -231,8 +231,8 @@ public abstract class WizardPage extends JPanel
 	{
 		public CancelAction()
 		{
-			putValue(Action.NAME, XSTR.getString("cancelButtonName"));
-			putValue(Action.SHORT_DESCRIPTION, XSTR.getString("cancelButtonTooltip"));
+			putValue(Action.NAME, getString("cancelButtonName"));
+			putValue(Action.SHORT_DESCRIPTION, getString("cancelButtonTooltip"));
 		}
 		
 		public void actionPerformed(ActionEvent e)

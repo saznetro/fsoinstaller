@@ -19,6 +19,8 @@
 
 package com.fsoinstaller.main;
 
+
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -65,5 +67,17 @@ public class ResourceBundleManager
 			return "ROOT";
 		else
 			return locale.toString();
+	}
+	
+	public static String getString(String propertykey)
+	{
+		String val = XSTR.getString(propertykey); 
+		  try {
+			val =new String(val.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			logger.warn("Converting the "+val+ " to UTF-8 didn't worked. For more info please rerun with debug logging");
+			logger.debug(e1.getMessage(),e1);
+		}
+		  return val;
 	}
 }

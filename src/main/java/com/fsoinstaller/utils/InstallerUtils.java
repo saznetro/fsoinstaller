@@ -34,7 +34,7 @@ import com.fsoinstaller.main.Configuration;
 import com.fsoinstaller.main.FreeSpaceOpenInstaller;
 import com.fsoinstaller.utils.OperatingSystem;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class InstallerUtils
@@ -55,8 +55,8 @@ public class InstallerUtils
 		Boolean installOpenAL = (Boolean) configuration.getSettings().get(Configuration.ADD_OPENAL_INSTALL_KEY);
 		if (installOpenAL != null && installOpenAL.booleanValue())
 		{
-			InstallerNode openAL = new InstallerNode(XSTR.getString("installOpenALName"));
-			openAL.setDescription(XSTR.getString("installOpenALDesc"));
+			InstallerNode openAL = new InstallerNode(getString("installOpenALName"));
+			openAL.setDescription(getString("installOpenALDesc"));
 			openAL.setFolder(File.separator);
 			openAL.setVersion(versionUUID());
 			InstallUnit installUnit = new InstallUnit();
@@ -78,7 +78,7 @@ public class InstallerUtils
 			
 			openAL.addExecCmd("oalinst.exe");
 			
-			openAL.setNote(XSTR.getString("openALNote"));
+			openAL.setNote(getString("openALNote"));
 			
 			if (!installUnit.getBaseURLList().isEmpty())
 				nodes.add(openAL);
@@ -92,8 +92,8 @@ public class InstallerUtils
 			InstallerNode gog = null;
 			if (gogInstallPackage != null)
 			{
-				gog = new InstallerNode(XSTR.getString("installGOGName"));
-				gog.setDescription(XSTR.getString("installGOGDesc"));
+				gog = new InstallerNode(getString("installGOGName"));
+				gog.setDescription(getString("installGOGDesc"));
 				gog.setFolder(UUID());
 				gog.setVersion(versionUUID());
 				InstallUnit installUnit = new InstallUnit();
@@ -148,8 +148,8 @@ public class InstallerUtils
 			InstallerNode steam = null;
 			if (steamInstallLocation != null)
 			{
-				steam = new InstallerNode(XSTR.getString("copyInstallationName"));
-				steam.setDescription(XSTR.getString("copyInstallationDesc"));
+				steam = new InstallerNode(getString("copyInstallationName"));
+				steam.setDescription(getString("copyInstallationDesc"));
 				steam.setVersion(versionUUID());
 				
 				// nothing to do until we actually need to copy things
@@ -160,8 +160,8 @@ public class InstallerUtils
 			String hash = (String) configuration.getSettings().get(Configuration.ROOT_FS2_VP_HASH_KEY);
 			if (hash != null && hash.equalsIgnoreCase("42bc56a410373112dfddc7985f66524a"))
 			{
-				InstallerNode patchTo1_2 = new InstallerNode(XSTR.getString("installPatchName"));
-				patchTo1_2.setDescription(XSTR.getString("installPatchDesc"));
+				InstallerNode patchTo1_2 = new InstallerNode(getString("installPatchName"));
+				patchTo1_2.setDescription(getString("installPatchDesc"));
 				patchTo1_2.setFolder(File.separator);
 				patchTo1_2.setVersion(versionUUID());
 				InstallUnit installUnit = new InstallUnit();
@@ -198,8 +198,8 @@ public class InstallerUtils
 			}
 			
 			// if any of the MVE files exist in data2 and data3, but not in data/movies, copy them
-			InstallerNode copyMVEs = new InstallerNode(XSTR.getString("installCopyCutscenesName"));
-			copyMVEs.setDescription(XSTR.getString("installCopyCutscenesDesc"));
+			InstallerNode copyMVEs = new InstallerNode(getString("installCopyCutscenesName"));
+			copyMVEs.setDescription(getString("installCopyCutscenesDesc"));
 			copyMVEs.setFolder(File.separator);
 			copyMVEs.setVersion(versionUUID());
 			boolean doCopy = false;

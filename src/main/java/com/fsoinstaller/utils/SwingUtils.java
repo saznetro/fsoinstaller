@@ -19,7 +19,7 @@
 
 package com.fsoinstaller.utils;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -225,7 +225,7 @@ public class SwingUtils
 				}
 				
 				// display it
-				int result = chooser.showDialog(parentFrame, XSTR.getString("OK"));
+				int result = chooser.showDialog(parentFrame, getString("OK"));
 				if (result == JFileChooser.APPROVE_OPTION)
 					fileHolder.set(chooser.getSelectedFile());
 			}

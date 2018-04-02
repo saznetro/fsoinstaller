@@ -38,7 +38,7 @@ import javax.swing.SwingUtilities;
 
 import com.fsoinstaller.wizard.GUIConstants;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -70,7 +70,7 @@ public class CollapsiblePanel extends JPanel
 				setCollapsed(!collapsed);
 			}
 		});
-		toggleButton.setToolTipText(XSTR.getString("collapseExpandTooltip"));
+		toggleButton.setToolTipText(getString("collapseExpandTooltip"));
 		
 		// gotta set the alignments so that the components don't float around
 		toggleButton.setAlignmentY(TOP_ALIGNMENT);

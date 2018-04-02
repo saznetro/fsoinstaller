@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -50,7 +51,8 @@ import com.fsoinstaller.utils.ProgressBarDialog;
 import com.fsoinstaller.utils.ThreadSafeJOptionPane;
 import com.l2fprod.common.swing.JDirectoryChooser;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class ConfigPage extends WizardPage
@@ -93,8 +95,8 @@ public class ConfigPage extends WizardPage
 		
 		// create widgets
 		directoryField = new JTextField(dirText);
-		hostField = new JTextField(usingProxy ? host : XSTR.getString("none"));
-		portField = new JTextField(usingProxy ? Integer.toString(port) : XSTR.getString("none"));
+		hostField = new JTextField(usingProxy ? host : getString("none"));
+		portField = new JTextField(usingProxy ? Integer.toString(port) : getString("none"));
 		hostField.setEnabled(usingProxy);
 		portField.setEnabled(usingProxy);
 		
@@ -110,7 +112,7 @@ public class ConfigPage extends WizardPage
 		JLabel dummy = new JLabel();
 		
 		// bleh, for multiline we need a JTextArea, but we want it to look like a JLabel
-		JTextArea text = new JTextArea(XSTR.getString("configPageText"));
+		JTextArea text = new JTextArea(getString("configPageText"));
 		text.setEditable(false);
 		text.setRows(4);
 		text.setOpaque(false);
@@ -127,14 +129,14 @@ public class ConfigPage extends WizardPage
 		dirPanel.add(new JButton(new BrowseAction()));
 		
 		JPanel outerDirPanel = new JPanel();
-		outerDirPanel.setBorder(BorderFactory.createTitledBorder(XSTR.getString("installationDirBorder")));
+		outerDirPanel.setBorder(BorderFactory.createTitledBorder(getString("installationDirBorder")));
 		outerDirPanel.setLayout(new BoxLayout(outerDirPanel, BoxLayout.Y_AXIS));
 		outerDirPanel.add(dirPanel);
 		
 		JCheckBox check = new JCheckBox(new ProxyCheckAction());
 		check.setSelected(usingProxy);
-		JLabel hostLabel = new JLabel(XSTR.getString("proxyHostLabel"));
-		JLabel portLabel = new JLabel(XSTR.getString("proxyPortLabel"));
+		JLabel hostLabel = new JLabel(getString("proxyHostLabel"));
+		JLabel portLabel = new JLabel(getString("proxyPortLabel"));
 		int m_width = (int) Math.max(hostLabel.getMinimumSize().getWidth(), portLabel.getMinimumSize().getWidth());
 		int p_width = (int) Math.max(hostLabel.getPreferredSize().getWidth(), portLabel.getPreferredSize().getWidth());
 		hostLabel.setMinimumSize(new Dimension(m_width, (int) hostLabel.getMinimumSize().getHeight()));
@@ -171,7 +173,7 @@ public class ConfigPage extends WizardPage
 		proxyPanel.add(portPanel);
 		
 		JPanel outerProxyPanel = new JPanel();
-		outerProxyPanel.setBorder(BorderFactory.createTitledBorder(XSTR.getString("proxySettingsBorder")));
+		outerProxyPanel.setBorder(BorderFactory.createTitledBorder(getString("proxySettingsBorder")));
 		outerProxyPanel.setLayout(new BoxLayout(outerProxyPanel, BoxLayout.Y_AXIS));
 		outerProxyPanel.add(proxyPanel);
 		
@@ -217,19 +219,19 @@ public class ConfigPage extends WizardPage
 		{
 			public void handleCancellation()
 			{
-				ThreadSafeJOptionPane.showMessageDialog(gui, XSTR.getString("validationCancelled"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(gui, getString("validationCancelled"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 			}
 			
 			public void handleException(Exception exception)
 			{
 				if (exception instanceof SecurityException)
 				{
-					ThreadSafeJOptionPane.showMessageDialog(gui, XSTR.getString("securityManagerError"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+					ThreadSafeJOptionPane.showMessageDialog(gui, getString("securityManagerError"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 					exitRunnable.run();
 				}
 				else if (exception instanceof InterruptedException)
 				{
-					ThreadSafeJOptionPane.showMessageDialog(gui, XSTR.getString("validationInterrupted"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+					ThreadSafeJOptionPane.showMessageDialog(gui, getString("validationInterrupted"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 					
 					// restore interrupt
 					Thread.currentThread().interrupt();
@@ -238,7 +240,7 @@ public class ConfigPage extends WizardPage
 				}
 				else
 				{
-					ThreadSafeJOptionPane.showMessageDialog(gui, XSTR.getString("unexpectedRuntimeException"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+					ThreadSafeJOptionPane.showMessageDialog(gui, getString("unexpectedRuntimeException"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 					exitRunnable.run();
 				}
 			}
@@ -263,14 +265,14 @@ public class ConfigPage extends WizardPage
 				public void run()
 				{
 					Callable<Void> gog = new DirectoryTask(gui, directoryField.getText(), runWhenReady, exitRunnable);
-					ProgressBarDialog dialog = new ProgressBarDialog(gui, XSTR.getString("progressBarCheckingDir"));
+					ProgressBarDialog dialog = new ProgressBarDialog(gui, getString("progressBarCheckingDir"));
 					dialog.runTask(gog, callback);
 				}
 			};
 		}
 		
 		Callable<Void> validation = new SuperValidationTask(gui, directoryField.getText(), usingProxy, hostField.getText(), portField.getText(), toRunNext, exitRunnable);
-		ProgressBarDialog dialog = new ProgressBarDialog(gui, XSTR.getString("progressBarSettingUpInstaller"));
+		ProgressBarDialog dialog = new ProgressBarDialog(gui, getString("progressBarSettingUpInstaller"));
 		dialog.runTask(validation, callback);
 	}
 	
@@ -278,8 +280,8 @@ public class ConfigPage extends WizardPage
 	{
 		public BrowseAction()
 		{
-			putValue(Action.NAME, XSTR.getString("browseButtonName"));
-			putValue(Action.SHORT_DESCRIPTION, XSTR.getString("browseButtonTooltip"));
+			putValue(Action.NAME, getString("browseButtonName"));
+			putValue(Action.SHORT_DESCRIPTION, getString("browseButtonTooltip"));
 		}
 		
 		public void actionPerformed(ActionEvent e)
@@ -289,11 +291,11 @@ public class ConfigPage extends WizardPage
 			// create a file chooser
 			JDirectoryChooser chooser = new JDirectoryChooser();
 			chooser.setCurrentDirectory(dir);
-			chooser.setDialogTitle(XSTR.getString("chooseDirTitle"));
+			chooser.setDialogTitle(getString("chooseDirTitle"));
 			chooser.setShowingCreateDirectory(false);
 			
 			// display it
-			int result = chooser.showDialog(gui, XSTR.getString("OK"));
+			int result = chooser.showDialog(gui, getString("OK"));
 			if (result == JDirectoryChooser.APPROVE_OPTION)
 				directoryField.setText(chooser.getSelectedFile().getAbsolutePath());
 		}
@@ -303,7 +305,7 @@ public class ConfigPage extends WizardPage
 	{
 		public ProxyCheckAction()
 		{
-			putValue(Action.NAME, XSTR.getString("proxyButtonName"));
+			putValue(Action.NAME, getString("proxyButtonName"));
 		}
 		
 		public void actionPerformed(ActionEvent e)

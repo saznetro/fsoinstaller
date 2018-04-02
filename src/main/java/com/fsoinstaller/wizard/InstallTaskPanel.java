@@ -19,7 +19,7 @@
 
 package com.fsoinstaller.wizard;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -59,7 +59,7 @@ public class InstallTaskPanel extends JPanel
 	 */
 	public void setPending()
 	{
-		progressBar.setString(XSTR.getString("progressBarWaiting"));
+		progressBar.setString(getString("progressBarWaiting"));
 		progressBar.setIndeterminate(true);
 		progressBar.setValue(0);
 		
@@ -83,7 +83,7 @@ public class InstallTaskPanel extends JPanel
 	
 	public void setTaskProgress(String taskName, long currentBytes, long totalBytes)
 	{
-		progressBar.setString(String.format(XSTR.getString("progressBarStatus"), taskName,
+		progressBar.setString(String.format(getString("progressBarStatus"), taskName,
 				MiscUtils.humanReadableByteCount(currentBytes, true),
 				MiscUtils.humanReadableByteCount(totalBytes, true)));
 
@@ -93,7 +93,7 @@ public class InstallTaskPanel extends JPanel
 	
 	public void setTaskNotNecessary(String taskName)
 	{
-		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + XSTR.getString("progressBarUpToDate"));
+		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + getString("progressBarUpToDate"));
 		progressBar.setIndeterminate(false);
 		progressBar.setValue(GUIConstants.BAR_MAXIMUM);
 		
@@ -102,7 +102,7 @@ public class InstallTaskPanel extends JPanel
 	
 	public void setTaskComplete(String taskName)
 	{
-		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + XSTR.getString("progressBarComplete"));
+		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + getString("progressBarComplete"));
 		progressBar.setIndeterminate(false);
 		progressBar.setValue(GUIConstants.BAR_MAXIMUM);
 		
@@ -111,7 +111,7 @@ public class InstallTaskPanel extends JPanel
 	
 	public void setTaskFailed(String taskName)
 	{
-		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + XSTR.getString("progressBarFailed"));
+		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + getString("progressBarFailed"));
 		progressBar.setIndeterminate(false);
 		progressBar.setValue(0);
 		
@@ -120,7 +120,7 @@ public class InstallTaskPanel extends JPanel
 	
 	public void setTaskCancelled(String taskName)
 	{
-		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + XSTR.getString("progressBarCancelled"));
+		progressBar.setString((MiscUtils.isEmpty(taskName) ? "" : (taskName + ": ")) + getString("progressBarCancelled"));
 		progressBar.setIndeterminate(false);
 		progressBar.setValue(0);
 		

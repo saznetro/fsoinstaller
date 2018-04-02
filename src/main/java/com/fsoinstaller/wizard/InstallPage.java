@@ -44,7 +44,7 @@ import com.fsoinstaller.main.Configuration;
 import com.fsoinstaller.main.FreeSpaceOpenInstaller;
 import com.fsoinstaller.utils.Logger;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class InstallPage extends WizardPage
@@ -77,7 +77,7 @@ public class InstallPage extends WizardPage
 	{
 		JPanel labelPanel = new JPanel();
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
-		labelPanel.add(new JLabel(XSTR.getString("installPageText")));
+		labelPanel.add(new JLabel(getString("installPageText")));
 		labelPanel.add(Box.createHorizontalGlue());
 		
 		// this little trick prevents the install items from stretching if there aren't enough to fill the vertical space
@@ -177,13 +177,13 @@ public class InstallPage extends WizardPage
 	{
 		public CancelAction()
 		{
-			putValue(Action.NAME, XSTR.getString("cancelButtonName"));
-			putValue(Action.SHORT_DESCRIPTION, XSTR.getString("cancelButtonTooltip"));
+			putValue(Action.NAME, getString("cancelButtonName"));
+			putValue(Action.SHORT_DESCRIPTION, getString("cancelButtonTooltip"));
 		}
 		
 		public void actionPerformed(ActionEvent e)
 		{
-			int response = JOptionPane.showConfirmDialog(gui, XSTR.getString("cancelPrompt"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			int response = JOptionPane.showConfirmDialog(gui, getString("cancelPrompt"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response != JOptionPane.YES_OPTION)
 				return;
 			

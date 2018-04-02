@@ -64,7 +64,7 @@ import com.fsoinstaller.utils.MiscUtils;
 import com.fsoinstaller.utils.OperatingSystem;
 import com.fsoinstaller.utils.SwingUtils;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class ModSelectPage extends WizardPage
@@ -89,7 +89,7 @@ public class ModSelectPage extends WizardPage
 		modPanel = new JPanel();
 		modPanel.setLayout(new BoxLayout(modPanel, BoxLayout.Y_AXIS));
 		modScrollPane = new JScrollPane(modPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		reRunCheckBox = new JCheckBox(XSTR.getString("modSelectPageCheckbox"));
+		reRunCheckBox = new JCheckBox(getString("modSelectPageCheckbox"));
 		
 		modNodeTreeWalk = null;
 		automaticNodeTreeWalk = null;
@@ -102,7 +102,7 @@ public class ModSelectPage extends WizardPage
 	{
 		JPanel labelPanel = new JPanel();
 		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
-		labelPanel.add(new JLabel(XSTR.getString("modSelectPageText")));
+		labelPanel.add(new JLabel(getString("modSelectPageText")));
 		labelPanel.add(Box.createHorizontalGlue());
 		
 		JPanel checkBoxPanel = new JPanel();
@@ -125,7 +125,7 @@ public class ModSelectPage extends WizardPage
 	@Override
 	public void prepareForDisplay()
 	{
-		setNextButton(XSTR.getString("installButtonName"), XSTR.getString("installButtonTooltip"));
+		setNextButton(getString("installButtonName"), getString("installButtonTooltip"));
 		
 		Map<String, Object> settings = configuration.getSettings();
 		@SuppressWarnings("unchecked")
@@ -356,10 +356,10 @@ public class ModSelectPage extends WizardPage
 					modList.append(allModPaths.get(modPath).getName());
 					modList.append("\n");
 				}
-				String prompt = String.format(XSTR.getString("dependenciesNotAvailable"), modList.toString());
+				String prompt = String.format(getString("dependenciesNotAvailable"), modList.toString());
 				
 				// prompt user about dependencies that don't exist
-				int result = SwingUtils.showCustomOptionDialog(gui, prompt, 0, XSTR.getString("optionInstallMods"), XSTR.getString("optionRemoveTheseMods"), XSTR.getString("optionModifySelection"));
+				int result = SwingUtils.showCustomOptionDialog(gui, prompt, 0, getString("optionInstallMods"), getString("optionRemoveTheseMods"), getString("optionModifySelection"));
 				if (result < 0 || result == 2)
 				{
 					// go back to the mod selection
@@ -389,7 +389,7 @@ public class ModSelectPage extends WizardPage
 					// we might have removed our entire selection!
 					if (selectedModPaths.isEmpty())
 					{
-						JOptionPane.showMessageDialog(gui, XSTR.getString("removeModsAlert"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(gui, getString("removeModsAlert"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 						return;
 					}
 				}
@@ -406,10 +406,10 @@ public class ModSelectPage extends WizardPage
 					modList.append(allModPaths.get(modPath).getName());
 					modList.append("\n");
 				}
-				String prompt = String.format(XSTR.getString("dependenciesNotSelected"), modList.toString());
+				String prompt = String.format(getString("dependenciesNotSelected"), modList.toString());
 				
 				// prompt user about dependencies that aren't selected
-				int result = SwingUtils.showCustomOptionDialog(gui, prompt, 0, XSTR.getString("optionAddToSelection"), XSTR.getString("optionRemoveOtherMods"), XSTR.getString("optionModifySelection"));
+				int result = SwingUtils.showCustomOptionDialog(gui, prompt, 0, getString("optionAddToSelection"), getString("optionRemoveOtherMods"), getString("optionModifySelection"));
 				if (result == 0)
 				{
 					// add all the dependencies, as well as all of their parent mods
@@ -464,7 +464,7 @@ public class ModSelectPage extends WizardPage
 					// we might have removed our entire selection!
 					if (selectedModPaths.isEmpty())
 					{
-						JOptionPane.showMessageDialog(gui, XSTR.getString("removeModsAlert"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(gui, getString("removeModsAlert"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 						return;
 					}
 				}
@@ -662,8 +662,8 @@ public class ModSelectPage extends WizardPage
 		JButton button = new JButton(new AbstractAction()
 		{
 			{
-				putValue(AbstractAction.NAME, XSTR.getString("moreInfoButtonName"));
-				putValue(AbstractAction.SHORT_DESCRIPTION, XSTR.getString("moreInfoButtonTooltip"));
+				putValue(AbstractAction.NAME, getString("moreInfoButtonName"));
+				putValue(AbstractAction.SHORT_DESCRIPTION, getString("moreInfoButtonTooltip"));
 			}
 			
 			public void actionPerformed(ActionEvent e)

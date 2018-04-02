@@ -23,14 +23,14 @@ import java.awt.image.BufferedImage;
 
 import com.fsoinstaller.utils.GraphicsUtils;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public enum InstallChoice
 {
-	BASIC(XSTR.getString("basicInstallationTitle"), "basic.png", XSTR.getString("basicInstallationDesc")),
-	COMPLETE(XSTR.getString("completeInstallationTitle"), "complete.png", XSTR.getString("completeInstallationDesc")),
-	CUSTOM(XSTR.getString("customInstallationTitle"), "custom.png", XSTR.getString("customInstallationDesc"));
+	BASIC(getString("basicInstallationTitle"), "basic.png", getString("basicInstallationDesc")),
+	COMPLETE(getString("completeInstallationTitle"), "complete.png", getString("completeInstallationDesc")),
+	CUSTOM(getString("customInstallationTitle"), "custom.png", getString("customInstallationDesc"));
 	
 	private final String name;
 	private final BufferedImage image;

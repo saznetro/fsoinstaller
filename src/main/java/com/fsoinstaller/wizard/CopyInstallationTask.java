@@ -33,7 +33,7 @@ import com.fsoinstaller.utils.IOUtils;
 import com.fsoinstaller.utils.Logger;
 import com.fsoinstaller.utils.MiscUtils;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -66,7 +66,7 @@ class CopyInstallationTask implements Callable<Boolean>
 		
 		// the first thing we do is obtain a list of the files that need to be copied
 		item.setIndeterminate(true);
-		item.setText(XSTR.getString("copyInstallationRetrievingList"));
+		item.setText(getString("copyInstallationRetrievingList"));
 		List<String> fileList;
 		try
 		{
@@ -78,7 +78,7 @@ class CopyInstallationTask implements Callable<Boolean>
 		catch (IOException ioe)
 		{
 			logger.error("Failed to retrieve the list of files to copy!", ioe);
-			item.logInstallError(XSTR.getString("copyInstallationRetrievingListFailed"));
+			item.logInstallError(getString("copyInstallationRetrievingListFailed"));
 			return false;
 		}
 		
@@ -97,7 +97,7 @@ class CopyInstallationTask implements Callable<Boolean>
 		
 		// copy the files and report progress
 		item.setIndeterminate(false);
-		item.setText(XSTR.getString("copyInstallationCopyingFiles"));
+		item.setText(getString("copyInstallationCopyingFiles"));
 		try
 		{
 			copyFiles(fileList, totalSize);
@@ -105,7 +105,7 @@ class CopyInstallationTask implements Callable<Boolean>
 		catch (IOException ioe)
 		{
 			logger.error("Could not copy files to installation directory!", ioe);
-			item.logInstallError(XSTR.getString("copyInstallationCopyingFilesFailed"));
+			item.logInstallError(getString("copyInstallationCopyingFilesFailed"));
 			return false;
 		}
 		

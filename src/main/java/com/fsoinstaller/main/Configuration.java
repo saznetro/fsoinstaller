@@ -265,7 +265,7 @@ public class Configuration
 	public String getProxyHost()
 	{
 		// don't reference XSTR earlier than we have to, since Configuration is initialized at the same time as FreeSpaceOpenInstaller
-		String NONE = ResourceBundleManager.XSTR.getString("none");
+		String NONE = ResourceBundleManager.getString("none");
 		
 		String host = userProperties.getProperty("proxy.host");
 		if (host == null || host.equalsIgnoreCase(NONE) || host.length() == 0)
@@ -289,7 +289,7 @@ public class Configuration
 	public void setProxyInfo(String host, int port)
 	{
 		// don't reference XSTR earlier than we have to, since Configuration is initialized at the same time as FreeSpaceOpenInstaller
-		String NONE = ResourceBundleManager.XSTR.getString("none");
+		String NONE = ResourceBundleManager.getString("none");
 		
 		// resolve host
 		if (host == null || host.equalsIgnoreCase(NONE) || host.length() == 0)
@@ -311,7 +311,7 @@ public class Configuration
 	public void setApplicationDir(File dir)
 	{
 		// don't reference XSTR earlier than we have to, since Configuration is initialized at the same time as FreeSpaceOpenInstaller
-		String NONE = ResourceBundleManager.XSTR.getString("none");
+		String NONE = ResourceBundleManager.getString("none");
 		
 		String dirStr = MiscUtils.validateApplicationDir(dir) ? dir.getAbsolutePath() : NONE;
 		userProperties.setProperty("application.dir", dirStr);

@@ -40,7 +40,7 @@ import javax.swing.WindowConstants;
 import com.fsoinstaller.main.FreeSpaceOpenInstaller;
 import com.fsoinstaller.wizard.GUIConstants;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -52,7 +52,7 @@ public class ProgressBarDialog
 {
 	private static final Logger logger = Logger.getLogger(ProgressBarDialog.class);
 	
-	public static final String INDETERMINATE_STRING = XSTR.getString("progressBarWorking");
+	public static final String INDETERMINATE_STRING = getString("progressBarWorking");
 	
 	private final Frame owner;
 	private final String text;

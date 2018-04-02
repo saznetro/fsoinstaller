@@ -26,7 +26,7 @@ import com.fsoinstaller.internet.DownloadListener;
 import com.fsoinstaller.internet.Downloader;
 import com.fsoinstaller.utils.MiscUtils;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class DownloadPanel extends InstallTaskPanel implements DownloadListener
@@ -75,7 +75,7 @@ public class DownloadPanel extends InstallTaskPanel implements DownloadListener
 	
 	public void downloadAboutToStart(DownloadEvent event)
 	{
-		progressBar.setString(String.format(XSTR.getString("progressBarStatus"), event.getDownloadName(),
+		progressBar.setString(String.format(getString("progressBarStatus"), event.getDownloadName(),
 				MiscUtils.humanReadableByteCount(0, true), MiscUtils.humanReadableByteCount(event.getTotalBytes(), true)));
 		progressBar.setIndeterminate(false);
 		progressBar.setValue(0);

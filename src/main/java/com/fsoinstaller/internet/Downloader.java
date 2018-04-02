@@ -55,7 +55,7 @@ import com.fsoinstaller.utils.Logger;
 import com.fsoinstaller.utils.MiscUtils;
 import com.fsoinstaller.utils.ObjectHolder;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -776,7 +776,7 @@ public class Downloader
 				if (currentExtractMode == ExtractAskMode.EXTRACT)
 					fireProgressReport(_archiveEntries[currentIndex], archiveCompletionValue, archiveTotalValue);
 				else
-					fireProgressReport(XSTR.getString("progressBarWorking2"), archiveCompletionValue, archiveTotalValue);
+					fireProgressReport(getString("progressBarWorking2"), archiveCompletionValue, archiveTotalValue);
 			}
 			
 			public void setTotal(long total) throws SevenZipException

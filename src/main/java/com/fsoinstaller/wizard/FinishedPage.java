@@ -38,7 +38,7 @@ import javax.swing.JTextPane;
 import com.fsoinstaller.main.Configuration;
 import com.fsoinstaller.utils.Logger;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class FinishedPage extends WizardPage
@@ -57,7 +57,7 @@ public class FinishedPage extends WizardPage
 	@Override
 	public JPanel createCenterPanel()
 	{
-		JLabel header = new JLabel(XSTR.getString("finishedPageText"));
+		JLabel header = new JLabel(getString("finishedPageText"));
 		header.setAlignmentX(LEFT_ALIGNMENT);
 		
 		JScrollPane scroll = new JScrollPane(textPane);
@@ -96,7 +96,7 @@ public class FinishedPage extends WizardPage
 		
 		StringBuilder text = new StringBuilder();
 		if (installNotes.isEmpty() && installErrors.isEmpty())
-			text.append(XSTR.getString("allModsSuccessful"));
+			text.append(getString("allModsSuccessful"));
 		
 		// add any notes
 		if (!installNotes.isEmpty())
@@ -115,9 +115,9 @@ public class FinishedPage extends WizardPage
 				text.append("\n\n");
 			
 			if (installErrors.size() == 1)
-				text.append(XSTR.getString("readErrors1"));
+				text.append(getString("readErrors1"));
 			else
-				text.append(XSTR.getString("readErrors2"));
+				text.append(getString("readErrors2"));
 			text.append("\n\n");
 			
 			for (String error: installErrors)
@@ -144,8 +144,8 @@ public class FinishedPage extends WizardPage
 	{
 		public FinishAction()
 		{
-			putValue(Action.NAME, XSTR.getString("finishButtonName"));
-			putValue(Action.SHORT_DESCRIPTION, XSTR.getString("finishButtonTooltip"));
+			putValue(Action.NAME, getString("finishButtonName"));
+			putValue(Action.SHORT_DESCRIPTION, getString("finishButtonTooltip"));
 		}
 		
 		public void actionPerformed(ActionEvent e)

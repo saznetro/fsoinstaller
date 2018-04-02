@@ -49,7 +49,7 @@ import com.fsoinstaller.utils.Logger;
 import com.fsoinstaller.utils.MiscUtils;
 import com.fsoinstaller.utils.ThreadSafeJOptionPane;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -123,7 +123,7 @@ class SuperValidationTask implements Callable<Void>
 		File destinationDir = MiscUtils.validateApplicationDir(directoryText);
 		if (destinationDir == null)
 		{
-			ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("directoryInvalid"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+			ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("directoryInvalid"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
 		
@@ -131,7 +131,7 @@ class SuperValidationTask implements Callable<Void>
 		if (!destinationDir.exists())
 		{
 			// prompt to create it
-			int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, XSTR.getString("directoryNotPresent"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION);
+			int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, getString("directoryNotPresent"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION);
 			if (result != JOptionPane.YES_OPTION)
 				return null;
 			
@@ -140,7 +140,7 @@ class SuperValidationTask implements Callable<Void>
 			// attempt to create it
 			if (!destinationDir.mkdirs())
 			{
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("directoryNotCreated"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("directoryNotCreated"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 				return null;
 			}
 			
@@ -163,13 +163,13 @@ class SuperValidationTask implements Callable<Void>
 			}
 			catch (NumberFormatException nfe)
 			{
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("proxyPortParseFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("proxyPortParseFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 				return null;
 			}
 			catch (InvalidProxyException ipe)
 			{
 				logger.error("Proxy could not be created!", ipe);
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("proxyInvalid"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("proxyInvalid"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 				return null;
 			}
 			
@@ -207,7 +207,7 @@ class SuperValidationTask implements Callable<Void>
 			catch (IOException ioe)
 			{
 				logger.error("Error creating temporary file!", ioe);
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("couldNotCreateTempFile"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("couldNotCreateTempFile"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 				return null;
 			}
 			tempVersion.deleteOnExit();
@@ -305,7 +305,7 @@ class SuperValidationTask implements Callable<Void>
 			// make sure we could access version information
 			if (!settings.containsKey(Configuration.REMOTE_VERSION_KEY))
 			{
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("couldNotGetRemoteVersion"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("couldNotGetRemoteVersion"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 				return null;
 			}
 			
@@ -314,7 +314,7 @@ class SuperValidationTask implements Callable<Void>
 			if (MiscUtils.compareVersions(maxVersion, FreeSpaceOpenInstaller.INSTALLER_VERSION) > 0)
 			{
 				logger.info("Installer is out-of-date; prompting user to download new version...");
-				int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, XSTR.getString("promptToDownloadNewVersion"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION);
+				int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, getString("promptToDownloadNewVersion"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION)
 				{
 					try
@@ -330,7 +330,7 @@ class SuperValidationTask implements Callable<Void>
 					{
 						logger.error("Something went wrong with the URL!", murle);
 					}
-					ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("problemDownloading"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+					ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("problemDownloading"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 					return null;
 				}
 			}
@@ -357,7 +357,7 @@ class SuperValidationTask implements Callable<Void>
 			List<String> urls = (List<String>) settings.get(Configuration.MOD_URLS_KEY);
 			if (urls == null || urls.isEmpty())
 			{
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("noModsFound"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("noModsFound"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 				EventQueue.invokeLater(exitRunnable);
 				return null;
 			}
@@ -387,7 +387,7 @@ class SuperValidationTask implements Callable<Void>
 				catch (IOException ioe)
 				{
 					logger.error("Error creating temporary file!", ioe);
-					ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("couldNotCreateTempFile"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+					ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("couldNotCreateTempFile"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 					return null;
 				}
 				tempModFile.deleteOnExit();
@@ -430,7 +430,7 @@ class SuperValidationTask implements Callable<Void>
 			// check that we have mods
 			if (modNodes.isEmpty())
 			{
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("noModsFound"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("noModsFound"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 				EventQueue.invokeLater(exitRunnable);
 				return null;
 			}

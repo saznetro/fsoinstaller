@@ -46,7 +46,7 @@ import com.fsoinstaller.utils.SwingUtils;
 import com.fsoinstaller.utils.ThreadSafeJOptionPane;
 import com.l2fprod.common.swing.JDirectoryChooser;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -96,7 +96,7 @@ class DirectoryTask implements Callable<Void>
 		File[] contents = destinationDir.listFiles();
 		if (contents == null)
 		{
-			ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("readCheckFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+			ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("readCheckFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		
@@ -112,13 +112,13 @@ class DirectoryTask implements Callable<Void>
 		catch (IOException ioe)
 		{
 			logger.error("Creating a temporary file '" + unique + "' failed", ioe);
-			ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("writeCheckFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+			ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("writeCheckFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		if (!writingTest.delete())
 		{
 			logger.error("Deleting a temporary file '" + unique + "' failed");
-			ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("deleteCheckFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+			ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("deleteCheckFailed"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 		
@@ -128,13 +128,13 @@ class DirectoryTask implements Callable<Void>
 			// we can install it on Windows, but not other OSes
 			if (OperatingSystem.getHostOS() == OperatingSystem.WINDOWS)
 			{
-				int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, XSTR.getString("promptToInstallOpenAL"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, getString("promptToInstallOpenAL"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (result == JOptionPane.YES_OPTION)
 					installOpenAL = true;
 			}
 			else
 			{
-				ThreadSafeJOptionPane.showMessageDialog(activeFrame, XSTR.getString("openALIsNeeded"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
+				ThreadSafeJOptionPane.showMessageDialog(activeFrame, getString("openALIsNeeded"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		
@@ -184,7 +184,7 @@ class DirectoryTask implements Callable<Void>
 			if (!exists)
 			{
 				logger.debug("Showing retailFS2NotFound prompt");
-				int result = ThreadSafeJOptionPane.showCustomOptionDialog(activeFrame, XSTR.getString("retailFS2NotFound"), 0, XSTR.getString("optionInstallGOG"), XSTR.getString("optionWrongDirectory"), XSTR.getString("optionContinueAnyway"));
+				int result = ThreadSafeJOptionPane.showCustomOptionDialog(activeFrame, getString("retailFS2NotFound"), 0, getString("optionInstallGOG"), getString("optionWrongDirectory"), getString("optionContinueAnyway"));
 				logger.debug("User selected " + result);
 				
 				// find out what was decided
@@ -197,7 +197,7 @@ class DirectoryTask implements Callable<Void>
 				else if (result == 0)
 				{
 					// figure out where we're installing from (we will add the actual "mod" in InstallPage)
-					gogInstallPackage = SwingUtils.promptForFile(activeFrame, XSTR.getString("chooseGOGPackageTitle"), configuration.getApplicationDir(), "exe", XSTR.getString("exeFilesFilter"));
+					gogInstallPackage = SwingUtils.promptForFile(activeFrame, getString("chooseGOGPackageTitle"), configuration.getApplicationDir(), "exe", getString("exeFilesFilter"));
 					logger.debug("GOG install package: " + gogInstallPackage.getAbsolutePath());
 				}
 				// add the Steam copy "mod"
@@ -215,11 +215,11 @@ promptForSteamFS2:	while (true)
 								// create a file chooser
 								JDirectoryChooser chooser = new JDirectoryChooser();
 								chooser.setCurrentDirectory(destinationDir);
-								chooser.setDialogTitle(XSTR.getString("chooseDirTitle"));
+								chooser.setDialogTitle(getString("chooseDirTitle"));
 								chooser.setShowingCreateDirectory(false);
 								
 								// display it
-								int result = chooser.showDialog(activeFrame, XSTR.getString("OK"));
+								int result = chooser.showDialog(activeFrame, getString("OK"));
 								if (result == JDirectoryChooser.APPROVE_OPTION)
 									fileResult.set(chooser.getSelectedFile());
 							}
@@ -237,7 +237,7 @@ promptForSteamFS2:	while (true)
 							{
 								public void run()
 								{
-									JOptionPane.showMessageDialog(activeFrame, XSTR.getString("readCheckFailed2"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(activeFrame, getString("readCheckFailed2"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 								}
 							});
 						}
@@ -258,7 +258,7 @@ promptForSteamFS2:	while (true)
 							{
 								public void run()
 								{
-									JOptionPane.showMessageDialog(activeFrame, XSTR.getString("copyFS2NotFound"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(activeFrame, getString("copyFS2NotFound"), FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.ERROR_MESSAGE);
 								}
 							});
 						}
@@ -302,7 +302,7 @@ promptForSteamFS2:	while (true)
 		
 		if (!extraVPs.isEmpty())
 		{
-			StringBuilder message = new StringBuilder(XSTR.getString("foundExtraVPs1"));
+			StringBuilder message = new StringBuilder(getString("foundExtraVPs1"));
 			message.append("\n\n");
 			for (String name: extraVPs)
 			{
@@ -310,7 +310,7 @@ promptForSteamFS2:	while (true)
 				message.append("\n");
 			}
 			message.append("\n");
-			message.append(XSTR.getString("foundExtraVPs2"));
+			message.append(getString("foundExtraVPs2"));
 			
 			// prompt to continue
 			int result = ThreadSafeJOptionPane.showConfirmDialog(activeFrame, message, FreeSpaceOpenInstaller.INSTALLER_TITLE, JOptionPane.YES_NO_OPTION);

@@ -63,7 +63,7 @@ import io.sigpipe.jbsdiff.Patch;
 import io.sigpipe.jbsdiff.progress.ProgressEvent;
 import io.sigpipe.jbsdiff.progress.ProgressListener;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class FreeSpaceOpenInstaller
@@ -331,9 +331,9 @@ rootLoop:		for (File root: roots)
 		
 		// we need to set the button text for any dialogs that appear
 		// (this has the side-effect of initializing XSTR before any Swing stuff, which keeps the flow conceptually untangled)
-		UIManager.put("OptionPane.yesButtonText", XSTR.getString("Yes"));
-		UIManager.put("OptionPane.noButtonText", XSTR.getString("No"));
-		UIManager.put("OptionPane.cancelButtonText", XSTR.getString("cancelButtonName"));
+		UIManager.put("OptionPane.yesButtonText", getString("Yes"));
+		UIManager.put("OptionPane.noButtonText", getString("No"));
+		UIManager.put("OptionPane.cancelButtonText", getString("cancelButtonName"));
 		
 		// Swing code goes on the event-dispatching thread...
 		EventQueue.invokeLater(new Runnable()
@@ -438,7 +438,7 @@ rootLoop:		for (File root: roots)
 		// if not, prompt for it
 		else
 		{
-			modFile = SwingUtils.promptForFile(null, XSTR.getString("chooseModConfigTitle"), config.getApplicationDir(), "txt", XSTR.getString("textFilesFilter"));
+			modFile = SwingUtils.promptForFile(null, getString("chooseModConfigTitle"), config.getApplicationDir(), "txt", getString("textFilesFilter"));
 			if (modFile == null)
 				return false;
 		}
@@ -454,7 +454,7 @@ rootLoop:		for (File root: roots)
 			for (InstallerNode node: nodes)
 				logger.info("Successfully parsed " + node.getName());
 				
-			logger.info(XSTR.getString("allNodesParsedSuccessfully"));
+			logger.info(getString("allNodesParsedSuccessfully"));
 			
 			// since this was successful, save it to the configuration
 			config.getSettings().put(Configuration.OVERRIDE_INSTALL_MOD_NODES_KEY, nodes);
@@ -497,7 +497,7 @@ rootLoop:		for (File root: roots)
 		{
 			String[] options = new String[] { "SHA-256", "SHA-1", "MD5" };
 			
-			int result = ThreadSafeJOptionPane.showOptionDialog(null, XSTR.getString("chooseHashAlgorithm"), XSTR.getString("chooseOptionTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			int result = ThreadSafeJOptionPane.showOptionDialog(null, getString("chooseHashAlgorithm"), getString("chooseOptionTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 			if (result < 0)
 			{
 				logger.warn("No hash option selected!");
@@ -532,7 +532,7 @@ rootLoop:		for (File root: roots)
 			while (true)
 			{
 				// prompt until the user cancels
-				File fileToHash = SwingUtils.promptForFile(null, XSTR.getString("chooseFileTitle"), dialogDir);
+				File fileToHash = SwingUtils.promptForFile(null, getString("chooseFileTitle"), dialogDir);
 				if (fileToHash == null)
 					break;
 					
@@ -594,7 +594,7 @@ rootLoop:		for (File root: roots)
 		// if not, prompt for it
 		else
 		{
-			int result = ThreadSafeJOptionPane.showOptionDialog(null, XSTR.getString("choosePatchType"), XSTR.getString("chooseOptionTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			int result = ThreadSafeJOptionPane.showOptionDialog(null, getString("choosePatchType"), getString("chooseOptionTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 			if (result < 0)
 			{
 				logger.warn("No patch option selected!");
@@ -617,7 +617,7 @@ rootLoop:		for (File root: roots)
 			File dialogDir = config.getApplicationDir();
 			
 			// prompt until the user cancels
-			sourceFile = SwingUtils.promptForFile(null, XSTR.getString("chooseSourceFileTitle"), dialogDir);
+			sourceFile = SwingUtils.promptForFile(null, getString("chooseSourceFileTitle"), dialogDir);
 			if (sourceFile == null)
 				return;
 				
@@ -625,7 +625,7 @@ rootLoop:		for (File root: roots)
 			if (sourceFile.exists() && !sourceFile.isDirectory())
 				dialogDir = sourceFile.getParentFile();
 				
-			targetFile = SwingUtils.promptForFile(null, XSTR.getString("chooseTargetFileTitle"), dialogDir);
+			targetFile = SwingUtils.promptForFile(null, getString("chooseTargetFileTitle"), dialogDir);
 			if (targetFile == null)
 				return;
 		}
@@ -687,7 +687,7 @@ rootLoop:		for (File root: roots)
 			File dialogDir = config.getApplicationDir();
 			
 			// prompt until the user cancels
-			sourceFile = SwingUtils.promptForFile(null, XSTR.getString("chooseSourceFileTitle"), dialogDir);
+			sourceFile = SwingUtils.promptForFile(null, getString("chooseSourceFileTitle"), dialogDir);
 			if (sourceFile == null)
 				return;
 				
@@ -695,7 +695,7 @@ rootLoop:		for (File root: roots)
 			if (sourceFile.exists() && !sourceFile.isDirectory())
 				dialogDir = sourceFile.getParentFile();
 				
-			patchFile = SwingUtils.promptForFile(null, XSTR.getString("choosePatchFileTitle"), dialogDir);
+			patchFile = SwingUtils.promptForFile(null, getString("choosePatchFileTitle"), dialogDir);
 			if (patchFile == null)
 				return;
 		}

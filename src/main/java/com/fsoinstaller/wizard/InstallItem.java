@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -70,7 +71,7 @@ import io.sigpipe.jbsdiff.progress.ProgressEvent;
 import io.sigpipe.jbsdiff.progress.ProgressListener;
 
 import static com.fsoinstaller.wizard.GUIConstants.*;
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 public class InstallItem extends JPanel
@@ -113,7 +114,7 @@ public class InstallItem extends JPanel
 		
 		overallBar = new JProgressBar(0, 100);
 		overallBar.setIndeterminate(true);
-		overallBar.setString(XSTR.getString("progressBarWaiting2"));
+		overallBar.setString(getString("progressBarWaiting2"));
 		overallBar.setStringPainted(true);
 		
 		stoplightPanel = new StoplightPanel((int) overallBar.getPreferredSize().getHeight());
@@ -316,7 +317,14 @@ public class InstallItem extends JPanel
 		}
 		
 		// and now we queue up our big task that handles this whole node
-		overallInstallTask = FreeSpaceOpenInstaller.getInstance().submitTask(XSTR.getString("installTitle") + " " + node.getTreePath(), new Callable<Void>()
+		String val = getString("installTitle"); 
+	  try {
+		val =new String(val.getBytes("ISO-8859-1"), "UTF-8");
+	} catch (UnsupportedEncodingException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+		overallInstallTask = FreeSpaceOpenInstaller.getInstance().submitTask(val + " " + node.getTreePath(), new Callable<Void>()
 		{
 			public Void call()
 			{
@@ -335,7 +343,7 @@ public class InstallItem extends JPanel
 						catch (SecurityException se)
 						{
 							modLogger.error("Encountered a security exception when processing setup tasks", se);
-							logInstallError(XSTR.getString("installResultSecurityExceptionInSetup"));
+							logInstallError(getString("installResultSecurityExceptionInSetup"));
 							modFolder = null;
 						}
 						
@@ -386,19 +394,19 @@ public class InstallItem extends JPanel
 						// ***** HACK: here are some special cases *****
 						
 						// if this is the OpenAL node, re-test for OpenAL
-						if (node.getName().equals(XSTR.getString("installOpenALName")))
+						if (node.getName().equals(getString("installOpenALName")))
 						{
 							modLogger.info("Re-testing for OpenAL");
 							
 							if (!MiscUtils.loadOpenAL())
 							{
-								logInstallError(XSTR.getString("openALError"));
+								logInstallError(getString("openALError"));
 								failInstallTree();
 								return null;
 							}
 						}
 						// if this is the GOG node, run the GOG task
-						else if (node.getName().equals(XSTR.getString("installGOGName")))
+						else if (node.getName().equals(getString("installGOGName")))
 						{
 							modLogger.info("Launching InnoExtractTask");
 							
@@ -424,7 +432,7 @@ public class InstallItem extends JPanel
 							}
 						}
 						// if this is the Steam copy node, run the copy task
-						else if (node.getName().equals(XSTR.getString("copyInstallationName")))
+						else if (node.getName().equals(getString("copyInstallationName")))
 						{
 							modLogger.info("Launching CopyInstallationTask");
 							
@@ -466,14 +474,14 @@ public class InstallItem extends JPanel
 						
 						// update GUI
 						setSuccess(true);
-						setText(XSTR.getString("installStatusDone"));
+						setText(getString("installStatusDone"));
 						setPercentComplete(100);
 					}
 					else
 					{
 						// update GUI slightly differently
 						setSuccess(true);
-						setText(XSTR.getString("installStatusUpToDate"));
+						setText(getString("installStatusUpToDate"));
 						setPercentComplete(100);
 						setIndeterminate(false);
 					}
@@ -485,7 +493,7 @@ public class InstallItem extends JPanel
 				catch (RuntimeException re)
 				{
 					modLogger.error("Unhandled runtime exception!", re);
-					logInstallError(XSTR.getString("installResultUnexpectedRuntimeException"));
+					logInstallError(getString("installResultUnexpectedRuntimeException"));
 					
 					// fail the tree so we don't get stuck with child nodes that are waiting to start
 					// (but watch out for errors while we're doing this!)
@@ -520,7 +528,7 @@ public class InstallItem extends JPanel
 			// set GUI
 			setSuccess(false);
 			setIndeterminate(false);
-			setText(XSTR.getString("installStatusCancelled"));
+			setText(getString("installStatusCancelled"));
 		}
 		else if (state == InstallItemState.RUNNING)
 		{
@@ -530,9 +538,9 @@ public class InstallItem extends JPanel
 			// set GUI
 			setSuccess(false);
 			setIndeterminate(false);
-			setText(XSTR.getString("installStatusCancelled"));
+			setText(getString("installStatusCancelled"));
 			
-			logInstallError(XSTR.getString("installResultCancelledByRequest"));
+			logInstallError(getString("installResultCancelledByRequest"));
 			
 			// interrupt the running task
 			overallInstallTask.cancel(true);
@@ -623,10 +631,10 @@ public class InstallItem extends JPanel
 		
 		if (!isTopLevelFailedItem)
 		{
-			setText(XSTR.getString("installStatusParentNotInstalled"));
+			setText(getString("installStatusParentNotInstalled"));
 			
 			modLogger.info("Parent mod could not be installed; this mod will be skipped!");
-			logInstallError(XSTR.getString("installResultSkipped"));
+			logInstallError(getString("installResultSkipped"));
 			
 			for (InstallTaskPanel panel: installTaskPanelList)
 				panel.preempt();
@@ -654,7 +662,7 @@ public class InstallItem extends JPanel
 		File installDir = configuration.getApplicationDir();
 		
 		modLogger.info("Starting processing");
-		setText(XSTR.getString("progressBarSettingUpMod"));
+		setText(getString("progressBarSettingUpMod"));
 		
 		// create the folder for this mod, if it has one
 		File folder;
@@ -675,7 +683,7 @@ public class InstallItem extends JPanel
 				if (!folder.mkdirs())
 				{
 					modLogger.error("Unable to create the folder '" + folderName + "'!");
-					logInstallError(String.format(XSTR.getString("installResultFolderNotCreated"), folderName));
+					logInstallError(String.format(getString("installResultFolderNotCreated"), folderName));
 					return null;
 				}
 			}
@@ -684,7 +692,7 @@ public class InstallItem extends JPanel
 		if (!node.getDeleteList().isEmpty())
 		{
 			modLogger.info("Processing DELETE items");
-			setText(XSTR.getString("progressBarDeleting"));
+			setText(getString("progressBarDeleting"));
 			
 			// delete what we need to
 			for (String delete: node.getDeleteList())
@@ -698,14 +706,14 @@ public class InstallItem extends JPanel
 					if (!IOUtils.deleteDirectoryTree(file))
 					{
 						modLogger.error("Unable to delete the directory '" + delete + "'!");
-						logInstallError(String.format(XSTR.getString("installResultDirectoryNotDeleted"), file));
+						logInstallError(String.format(getString("installResultDirectoryNotDeleted"), file));
 						return null;
 					}
 				}
 				else if (!file.delete())
 				{
 					modLogger.error("Unable to delete the file '" + delete + "'!");
-					logInstallError(String.format(XSTR.getString("installResultFileNotDeleted"), file));
+					logInstallError(String.format(getString("installResultFileNotDeleted"), file));
 					return null;
 				}
 			}
@@ -714,7 +722,7 @@ public class InstallItem extends JPanel
 		if (!node.getRenameList().isEmpty())
 		{
 			modLogger.info("Processing RENAME items");
-			setText(XSTR.getString("progressBarRenaming"));
+			setText(getString("progressBarRenaming"));
 			
 			// rename what we need to
 			for (FilePair rename: node.getRenameList())
@@ -732,7 +740,7 @@ public class InstallItem extends JPanel
 					if (to.getParentFile() != null && !to.getParentFile().exists() && !to.getParentFile().mkdirs())
 					{
 						modLogger.error("Unable to rename '" + rename.getFrom() + "' to '" + rename.getTo() + "': destination file tree could not be created!");
-						logInstallError(String.format(XSTR.getString("installResultFileNotRenamed"), rename.getFrom(), rename.getTo()));
+						logInstallError(String.format(getString("installResultFileNotRenamed"), rename.getFrom(), rename.getTo()));
 						return null;
 					}
 					
@@ -740,7 +748,7 @@ public class InstallItem extends JPanel
 					if (!from.renameTo(to))
 					{
 						modLogger.error("Unable to rename '" + rename.getFrom() + "' to '" + rename.getTo() + "'!");
-						logInstallError(String.format(XSTR.getString("installResultFileNotRenamed"), rename.getFrom(), rename.getTo()));
+						logInstallError(String.format(getString("installResultFileNotRenamed"), rename.getFrom(), rename.getTo()));
 						return null;
 					}
 				}
@@ -750,7 +758,7 @@ public class InstallItem extends JPanel
 		if (!node.getCopyList().isEmpty())
 		{
 			modLogger.info("Processing COPY items");
-			setText(XSTR.getString("progressBarCopying"));
+			setText(getString("progressBarCopying"));
 			
 			// copy what we need to
 			for (FilePair copy: node.getCopyList())
@@ -776,7 +784,7 @@ public class InstallItem extends JPanel
 					catch (IOException ioe)
 					{
 						modLogger.error("Unable to copy '" + copy.getFrom() + "' to '" + copy.getTo() + "'!", ioe);
-						logInstallError(String.format(XSTR.getString("installResultFileNotCopied"), copy.getFrom(), copy.getTo()));
+						logInstallError(String.format(getString("installResultFileNotCopied"), copy.getFrom(), copy.getTo()));
 						return null;
 					}
 				}
@@ -799,7 +807,7 @@ public class InstallItem extends JPanel
 		if (patchItems > 0)
 		{
 			modLogger.info("Processing PATCH items");
-			setText(XSTR.getString("progressBarPatching"));
+			setText(getString("progressBarPatching"));
 			
 			final Connector connector = (Connector) configuration.getSettings().get(Configuration.CONNECTOR_KEY);
 			
@@ -827,7 +835,7 @@ public class InstallItem extends JPanel
 					final DownloadPanel patchPanel = (DownloadPanel) installTaskPanelList.get(patchTaskIndex);
 					
 					// submit a task for this patch
-					FreeSpaceOpenInstaller.getInstance().submitTask(XSTR.getString("patchTitle") + " " + triple.getPrePatch().getFilename(), new Callable<Void>()
+					FreeSpaceOpenInstaller.getInstance().submitTask(getString("patchTitle") + " " + triple.getPrePatch().getFilename(), new Callable<Void>()
 					{
 						public Void call()
 						{
@@ -845,7 +853,7 @@ public class InstallItem extends JPanel
 							catch (RuntimeException re)
 							{
 								modLogger.error("Unhandled runtime exception!", re);
-								logInstallError(XSTR.getString("installResultUnexpectedRuntimeException"));
+								logInstallError(getString("installResultUnexpectedRuntimeException"));
 							}
 							finally
 							{
@@ -889,7 +897,7 @@ public class InstallItem extends JPanel
 		if (downloadItems > 0)
 		{
 			modLogger.info("Processing INSTALL items");
-			setText(XSTR.getString("progressBarInstalling"));
+			setText(getString("progressBarInstalling"));
 			
 			final Connector connector = (Connector) configuration.getSettings().get(Configuration.CONNECTOR_KEY);
 			
@@ -919,7 +927,7 @@ public class InstallItem extends JPanel
 					final DownloadPanel downloadPanel = (DownloadPanel) installTaskPanelList.get(downloadTaskIndex);
 					
 					// submit a task for this file
-					FreeSpaceOpenInstaller.getInstance().submitTask(XSTR.getString("downloadTitle") + " " + file, new Callable<Void>()
+					FreeSpaceOpenInstaller.getInstance().submitTask(getString("downloadTitle") + " " + file, new Callable<Void>()
 					{
 						public Void call()
 						{
@@ -933,7 +941,7 @@ public class InstallItem extends JPanel
 									successes.incrementAndGet();
 								// don't mislead the user if we cancelled the file
 								else if (!Thread.currentThread().isInterrupted())
-									logInstallError(String.format(XSTR.getString("installResultFileNotDownloaded"), file));
+									logInstallError(String.format(getString("installResultFileNotDownloaded"), file));
 								int complete = completions.incrementAndGet();
 								
 								// next update the progress bar
@@ -945,7 +953,7 @@ public class InstallItem extends JPanel
 							catch (RuntimeException re)
 							{
 								modLogger.error("Unhandled runtime exception!", re);
-								logInstallError(XSTR.getString("installResultUnexpectedRuntimeException"));
+								logInstallError(getString("installResultUnexpectedRuntimeException"));
 							}
 							finally
 							{
@@ -1000,7 +1008,7 @@ public class InstallItem extends JPanel
 		catch (NoSuchAlgorithmException nsae)
 		{
 			modLogger.error("Unable to compute hash; '" + algorithm + "' is not a recognized algorithm!", nsae);
-			logInstallError(String.format(XSTR.getString("installResultHashNotComputed"), algorithm));
+			logInstallError(String.format(getString("installResultHashNotComputed"), algorithm));
 			return null;
 		}
 		
@@ -1037,7 +1045,7 @@ public class InstallItem extends JPanel
 		if (!node.getHashList().isEmpty())
 		{
 			modLogger.info("Processing HASH items");
-			setText(XSTR.getString("progressBarHashing"));
+			setText(getString("progressBarHashing"));
 			
 			int badHashes = 0;
 			
@@ -1066,12 +1074,12 @@ public class InstallItem extends JPanel
 					// notify the user
 					if (baleeted)
 					{
-						logInstallError(String.format(XSTR.getString("installResultHashMismatch1"), hash.getFilename()));
+						logInstallError(String.format(getString("installResultHashMismatch1"), hash.getFilename()));
 						modLogger.error("File deleted!");
 					}
 					else
 					{
-						logInstallError(String.format(XSTR.getString("installResultHashMismatch2"), hash.getFilename()));
+						logInstallError(String.format(getString("installResultHashMismatch2"), hash.getFilename()));
 						modLogger.error("Unable to delete the file!");
 					}
 					
@@ -1106,7 +1114,7 @@ public class InstallItem extends JPanel
 		if (!node.getExecCmdList().isEmpty())
 		{
 			modLogger.info("Processing EXEC items");
-			setText(XSTR.getString("progressBarRunningExec"));
+			setText(getString("progressBarRunningExec"));
 			
 			for (String cmd: node.getExecCmdList())
 			{
@@ -1124,7 +1132,7 @@ public class InstallItem extends JPanel
 				catch (IOException ie)
 				{
 					modLogger.error("The command '" + cmd + "' failed due to an exception!", ie);
-					logInstallError(String.format(XSTR.getString("installResultExecCmdError"), cmd));
+					logInstallError(String.format(getString("installResultExecCmdError"), cmd));
 					return false;
 				}
 				
@@ -1132,7 +1140,7 @@ public class InstallItem extends JPanel
 				if (exitVal != 0)
 				{
 					modLogger.error("The command '" + cmd + "' exited with error code " + exitVal + "!");
-					logInstallError(String.format(XSTR.getString("installResultExecCmdError"), cmd));
+					logInstallError(String.format(getString("installResultExecCmdError"), cmd));
 					return false;
 				}
 			}

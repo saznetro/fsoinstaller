@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import static com.fsoinstaller.main.ResourceBundleManager.XSTR;
+import static com.fsoinstaller.main.ResourceBundleManager.getString;
 
 
 /**
@@ -57,7 +57,7 @@ public class ImagePanel extends JPanel
 		}
 		else
 		{
-			JLabel label = new JLabel(XSTR.getString("imageNotAvailable"));
+			JLabel label = new JLabel(getString("imageNotAvailable"));
 			label.setFont(label.getFont().deriveFont(Font.BOLD, label.getFont().getSize() + 2));
 			label.setForeground(Color.GRAY);
 			
