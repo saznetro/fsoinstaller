@@ -6,7 +6,7 @@
 	<version>2.3.1-SNAPSHOT</version>
 	<name>Freespace 2 open intaller</name>
 	<description>The Java installer for FS2_Open and the collection of mods from the Hard Light Productions community.</description>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -33,7 +33,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-						 <encoding>UTF-8</encoding>
+							<encoding>UTF-8</encoding>
 							<outputDirectory>${basedir}/target/classes/resources</outputDirectory>
 							<resources>
 								<resource>
@@ -50,7 +50,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-						 <encoding>UTF-8</encoding>
+							<encoding>UTF-8</encoding>
 							<outputDirectory>${basedir}/target/classes</outputDirectory>
 							<resources>
 								<resource>
@@ -84,9 +84,9 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>3.1.0</version>
 				<configuration>
-				<finalName>
-				FreeSpaceOpenInstaller
-				</finalName>
+					<finalName>
+						FreeSpaceOpenInstaller
+					</finalName>
 					<!-- put your configurations here -->
 				</configuration>
 				<executions>
@@ -139,6 +139,13 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-testng</artifactId>
+			<version>1.7.3</version>
 			<scope>test</scope>
 		</dependency>
 
