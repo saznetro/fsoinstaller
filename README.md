@@ -1,5 +1,8 @@
 The Forked project:
-I'm playing with an old project for fun. Trying to mavenizing it and add test and continuous test features.
+I'm playing with an old project for fun. 
+- Convert it to a maven project
+- Update it with unit /function test
+- Continous test feature
 
 To create the FreeSpaceOpenInstaller.jar please run:
 
