@@ -1,6 +1,7 @@
 The Forked project:
 I'm playing with an old project for fun. 
 - Convert it to a maven project
+	- [More info](https://fleshandmachines.wordpress.com/2018/04/07/freespaceopen-installer-improvement-or-how-to-mavenize-an-old-ant-based-project/  
 - Update it with unit /function test
 - Continous test feature
 
