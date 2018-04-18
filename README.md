@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/saznetro/fsoinstaller.svg?branch=master)](https://travis-ci.org/saznetro/fsoinstaller)
+
 The Forked project:
 I'm playing with an old project for fun. 
 - Convert it to a maven project
